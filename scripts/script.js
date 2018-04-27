@@ -17,15 +17,15 @@ $('document').ready(function(){
   let robotArr = [];
   let gameCount = 0;
   let endGame = false;
+
   // CHANGE COLOR EVENT
   $('.colors').on('click', function(event){
     let color = $(event.target).css('background-color');
-    $('body').css('background-color', color);
-    $('body').css('color', '#fff');
-    $('section').children().css('color', color);
+    $(':root').css('--theme-color', color);
+    $(':root').css('--text-color', '#ffffff');
     $('section').children().css('border', 'none');
     if (color == 'rgb(255, 255, 255)'){
-      $('body').css('color', 'rgb(0,0,0)');
+      $(':root').css('--text-color', 'rgb(0,0,0)');
       $('section').children().css('color', 'rgb(0,0,0)');
       $('section').children().css('border', '1px solid #000');
     }
