@@ -1,5 +1,5 @@
 $('document').ready(function(){
-  
+
   //GLOBAL VARIABLES
   let character = '';
   let victoryArr = [
@@ -63,7 +63,6 @@ $('document').ready(function(){
         victoryCheck(playerArr, victoryArr, targets);
 
         //robot moves
-        console.log(endGame);
         if(endGame == false) setTimeout(function(){robot();}, 1000);
 
       }
@@ -75,7 +74,31 @@ $('document').ready(function(){
     let robotChar = 'X'
     if(character == 'X') robotChar = 'O';
 
-    let robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
+    //smart robot choices
+    let robotChoice = '';
+    //if beginning of the match, take middle or edges randomly
+    if(robotArr.length == 0){
+      while(['2','4','6','8',''].indexOf(robotChoice)!= -1){
+        robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
+      }
+      //if player's turn first, and player did not choose middle, choose middle
+      if(playerArr.length == 1 && playerArr[0] !=5) robotChoice = '5';
+    }
+
+    //if in the middle of the match
+    else{
+      //check if robot has 2 consecutive, and finish if necessary
+      robotChoice = complete(robotArr, victoryArr, targets);
+      //check if player has 2 consecutive, and deny the player victory
+      if(!robotChoice) {
+        robotChoice = complete(playerArr, victoryArr, targets);
+      }
+      //if there are no 2 consecutives, pick a spot at random
+      if(!robotChoice){
+          robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
+      }
+    }
+
     robotArr.push(targets.splice(targets.indexOf(robotChoice), 1)[0]);
     $('#'+robotChoice).text(robotChar);
 
@@ -84,6 +107,21 @@ $('document').ready(function(){
     $('#your').hide().fadeIn(300).css('display', 'block');
 
     victoryCheck(robotArr, victoryArr, targets);
+  }
+
+  //SMART AI FUNCTION
+  function complete(playerArray, victoryArray, targets){
+    for(let element of victoryArray){
+      let count = 0;
+      element.forEach(h => {
+        for(let i of playerArray){if(i==h) count++;}
+      });
+      if (count == 2){
+        for(let j of element){
+          if(playerArray.indexOf(j) == -1 && targets.indexOf(j) != -1)return j;
+        }
+      }
+    }
   }
 
   //VICTORY CHECK FUNCTION
@@ -96,8 +134,7 @@ $('document').ready(function(){
     for(let element of victoryArray){
       let count = 0;
       element.forEach(h => {
-        for(let i of playerArray){
-          if(i==h) count++;}
+        for(let i of playerArray){if(i==h) count++;}
       });
       if (count == 3){
         $('h2').css('display', 'none');
