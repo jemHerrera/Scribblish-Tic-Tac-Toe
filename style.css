@@ -110,8 +110,9 @@ section div{
     align-self: end;
     text-align: center;
     color: var(--text-color);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 80%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: 60%;
     height: 1em;
 }
 /* COLORS */

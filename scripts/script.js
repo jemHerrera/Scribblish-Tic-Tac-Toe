@@ -152,23 +152,24 @@ $('document').ready(function(){
     else if (gameCount == 1) $('.spoiler').hide().fadeIn(2000).text("But if you actually win... Send me an email, my robot and I need to talk");
     else if (gameCount == 3) $('.spoiler').hide().fadeIn(2000).text("I'm quite impressed with your persistence");
     else if (gameCount == 4) $('.spoiler').hide().fadeIn(2000).text("By the way, my name is Jem, nice to meet you");
-    else if (gameCount == 5) $('.spoiler').hide().fadeIn(2000).text("Hopefully, you're aware that this is pre-written");
+    else if (gameCount == 5) $('.spoiler').hide().fadeIn(2000).text("Hopefully you're aware that this is pre-written");
     else if (gameCount == 6) $('.spoiler').hide().fadeIn(2000).text("This is your 7th game with my robot, just fyi");
-    else if (gameCount == 7) $('.spoiler').hide().fadeIn(2000).text("Congratulations!, you just wasted minutes of your life.. Reading pre-written text.. and getting draws with an AI");
-    else if (gameCount == 8) $('.spoiler').hide().fadeIn(2000).text("Any normal person would never reach this content, are you sure you don't need medical attention?");
-    else if (gameCount == 9) {
+    else if (gameCount == 7) $('.spoiler').hide().fadeIn(2000).text("Congratulations!, you just wasted minutes of your life.. Reading pre-written text and trying to beat an unbeatable AI");
+    else if (gameCount == 8) $('.spoiler').hide().fadeIn(2000).text("Any person with OK mental health would never be able to read this, are you sure you don't need any medical attention?");
+    else if (gameCount == 9) $('.spoiler').hide().fadeIn(2000).text("How about you play my simon game? For sure that will be worth your time");
+    else if (gameCount == 11) {
       $('.spoiler').hide().fadeIn(2000).text("Don't you think this is getting a little boring? Ok I give up, you win, here's your rainbow.");
       setTimeout(function(){
         $('.colors').css('display','grid').hide().fadeIn(2000);
         $('.spoiler').hide();
       }, 7000);
     }
-    else if (gameCount == 10) {
+    else if (gameCount == 12) {
       $('.colors').hide();
       $('.spoiler').hide().fadeIn(2000).text("Ha! No more rainbows for you!");
     }
-    else if (gameCount == 11) {
-      $('.spoiler').hide().fadeIn(2000).text("Just kidding! Well, it's been a pleasure, thank you for spending your time here. Goodbye.");
+    else if (gameCount == 14) {
+      $('.spoiler').hide().fadeIn(2000).text("Just kidding! Well, it's been a pleasure, thank you for spending your time here.");
       setTimeout(function(){
         $('.colors').css('display','grid').hide().fadeIn(2000);
         $('.spoiler').hide();
