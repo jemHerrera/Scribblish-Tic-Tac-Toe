@@ -18,6 +18,12 @@ body{
 }
 
 /* HEADINGS */
+h4{
+    font-family: 'Rouge Script', cursive;
+    font-size: 140%;
+    margin-top: 5%;
+}
+
 h1{
     font-weight: 200;
     grid-row-start:2;
