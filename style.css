@@ -1,5 +1,5 @@
 :root{
-    --theme-color: #00cdcd;
+    --theme-color: #333333;
     --text-color: #ffffff;
 }
 
@@ -20,18 +20,24 @@ body{
     text-align :center;
     height: 100vh;
     background-color: var(--theme-color);
+    transition: background-color 1s ease-in-out;
 }
 
 /* HEADINGS */
+
+.title{
+    grid-row-start: 1;
+    margin-top: 5%;
+}
+
 h4{
     font-family: 'Rouge Script', cursive;
     font-size: 140%;
-    margin-top: 5%;
 }
 
 h1{
     font-weight: 200;
-    grid-row-start: 2;
+    
 }
 
 .turns{
@@ -62,7 +68,7 @@ section div{
     justify-content: center;
     width: 100px;
     height: 100px;
-    background-color: #fff;
+    background-color: var(--text-color);
     font-size:150%;
     font-family: 'Raleway', sans-serif;
     font-weight: 300;
@@ -98,21 +104,34 @@ section div{
 .char:nth-of-type(1){justify-self: end;}
 .char:nth-of-type(2){justify-self: start;}
 
-/* COLORS */
-.colors{
-    display: grid;
+
+.spoiler{
     grid-row-start: 5;
+    align-self: end;
+    text-align: center;
+    color: var(--text-color);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80%;
+    height: 1em;
+}
+/* COLORS */
+
+.colors{
+    display: none;
+    grid-row-start: 5;
+    align-self: end;
     grid-template-columns: repeat(9, 1fr);
-    grid-gap: 2px;
-    height: 5px;
+    height: 0.5em;
     min-width: 300px;
     width: 50%;
 }
 
 .colors div{
     cursor:pointer;
+    height: 100%;
 }
 
+.zero{background-color: #525252;}
 .one{background-color: #EA6161;}
 .two{background-color: #eaa661;}
 .three{background-color: #eebf52;}
@@ -121,7 +140,6 @@ section div{
 .six{background-color: #61a6ea;}
 .seven{background-color: #a661ea;}
 .eight{background-color: #333333;}
-.nine{background-color: #ffffff;}
 
 @media screen and (max-width:600px){
     body{
