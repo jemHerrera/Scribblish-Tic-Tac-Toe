@@ -73,7 +73,12 @@ section div{
     font-family: 'Raleway', sans-serif;
     font-weight: 300;
     color: var(--theme-color);
+    transition: opacity 0.2s ease-in-out;
     cursor: pointer;
+}
+
+section div:hover{
+    opacity: 0.5;
 }
 
 .xo{
@@ -100,7 +105,7 @@ section div{
     cursor: pointer;
     width: 50%;
 }
-
+.char{transition: opacity 0.5s ease-in-out;}
 .char:nth-of-type(1){justify-self: end;}
 .char:nth-of-type(2){justify-self: start;}
 
