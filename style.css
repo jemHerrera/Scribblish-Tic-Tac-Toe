@@ -1,5 +1,5 @@
 :root{
-    --theme-color: #333333;
+    --theme-color: #0e1218;
     --text-color: #ffffff;
 }
 
@@ -145,7 +145,7 @@ section div:hover{
 .five{background-color: #00CDCD;}
 .six{background-color: #61a6ea;}
 .seven{background-color: #a661ea;}
-.eight{background-color: #333333;}
+.eight{background-color: #0e1218;}
 
 @media screen and (max-width:600px){
     body{
