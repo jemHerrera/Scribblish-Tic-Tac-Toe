@@ -68,7 +68,7 @@ section div{
     justify-content: center;
     width: 100px;
     height: 100px;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: var(--text-color);
     font-size:150%;
     font-family: 'Raleway', sans-serif;
