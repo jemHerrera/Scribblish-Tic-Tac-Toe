@@ -72,10 +72,8 @@ $('document').ready(function(){
       while(['2','4','6','8',''].indexOf(robotChoice)!= -1){
         robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
       }
-      //if player's turn first, and player did not choose middle, choose middle
       if(playerArr.length == 1 && playerArr[0] !=5) robotChoice = '5';
     }
-
     //if not the beginning of the match
     else{
       //check if robot has 2 consecutive, and finish if necessary
@@ -84,6 +82,7 @@ $('document').ready(function(){
       if(!robotChoice) {
         robotChoice = complete(playerArr, victoryArr, targets);
       }
+      if (!robotChoice && playerArr.indexOf('8') == -1 && robotArr.indexOf('8') == -1) robotChoice = '8';
       //prioritize edges if there are no 2 consecutives
       if(!robotChoice ){
         let limitLoop = 0;
