@@ -1,8 +1,8 @@
 $('document').ready(function(){
   $('body').hide().fadeIn(2000);
   //GLOBAL VARIABLES
-  let character = '';
-  let victoryArr = [
+  let character = '',
+  victoryArr = [
     ['1','2','3'],
     ['4','5','6'],
     ['7','8','9'],
@@ -11,12 +11,12 @@ $('document').ready(function(){
     ['3','6','9'],
     ['1','5','9'],
     ['3','5','7']
-  ];
-  let targets = ['1','2','3','4','5','6','7','8','9'];
-  let playerArr = [];
-  let robotArr = [];
-  let gameCount = 0;
-  let endGame = false;
+  ],
+  targets = ['1','2','3','4','5','6','7','8','9'],
+  playerArr = [],
+  robotArr = [],
+  gameCount = 0,
+  endGame = false;
 
   // CHOOSING WHETHER X OR O
   $('.char').on('mouseover', function(char){
@@ -147,15 +147,15 @@ $('document').ready(function(){
   function reset(){
 
     //Generate messages
-    if (gameCount == 0) $('.spoiler').hide().fadeIn(2000).text("Spoiler alert: One does not simply win in this game");
+    if (gameCount == 0) $('.spoiler').hide().fadeIn(2000).text("Spoiler alert: One does not simply win this game");
     else if (gameCount == 1) $('.spoiler').hide().fadeIn(2000).text("But if you actually win... Send me an email (My robot and I will then have a chat)");
     else if (gameCount == 3) $('.spoiler').hide().fadeIn(2000).text("I'm quite impressed with your persistence");
     else if (gameCount == 4) $('.spoiler').hide().fadeIn(2000).text("By the way, my name is Jem, nice to meet you");
-    else if (gameCount == 5) $('.spoiler').hide().fadeIn(2000).text("Hopefully you're aware that this is pre-written");
+    else if (gameCount == 5) $('.spoiler').hide().fadeIn(2000).text("Umm...Are you a hiring manager? Hire me! I'll promise to behave!");
     else if (gameCount == 6) $('.spoiler').hide().fadeIn(2000).text("This is your 7th game with my robot, just fyi");
-    else if (gameCount == 7) $('.spoiler').hide().fadeIn(2000).text("Congratulations!, you just wasted minutes of your life.. Reading pre-written text and trying to beat an unbeatable AI");
+    else if (gameCount == 7) $('.spoiler').hide().fadeIn(2000).text("Congratulations!, you just wasted minutes of your life.. Reading pre-written text and trying to beat my buddy robot here");
     else if (gameCount == 8) $('.spoiler').hide().fadeIn(2000).text("No mentally healthy individual will ever get to this point.. Are you sure you don't need any medical attention?");
-    else if (gameCount == 9) $('.spoiler').hide().fadeIn(2000).text("How about you play my simon game? For sure that will be worth your time");
+    else if (gameCount == 9) $('.spoiler').hide().fadeIn(2000).text("How about you play my simon game? That might be worth your time");
     else if (gameCount == 11) $('.spoiler').hide().fadeIn(2000).text("Don't you think this is getting a little boring?");
     else if (gameCount == 12) {
       $('.spoiler').hide().fadeIn(2000).text("Ok I give up, you win, here's your rainbow.");
