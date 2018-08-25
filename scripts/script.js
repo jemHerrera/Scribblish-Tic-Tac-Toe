@@ -4,15 +4,15 @@ $('document').ready(function(){
   let character = '',
   victoryArr = [
     ['1','2','3'],
-    ['4','5','-4'],
-    ['-3','-2','-1'],
-    ['1','4','-3'],
-    ['2','5','-2'],
-    ['3','6','-1'],
-    ['1','5','-1'],
-    ['3','5','-3']
+    ['4','5','6'],
+    ['7','8','9'],
+    ['1','4','7'],
+    ['2','5','8'],
+    ['3','6','9'],
+    ['1','5','9'],
+    ['3','5','7']
   ],
-  targets = ['1','2','3','4','5','-4','-3','-2','-1'],
+  targets = ['1','2','3','4','5','6','7','8','9'],
   playerArr = [],
   robotArr = [],
   gameCount = 0,
@@ -52,7 +52,6 @@ $('document').ready(function(){
 
       //robot moves
       if(endGame == false) setTimeout(function(){robot();}, 1000);
-
     }
   });
 
@@ -64,14 +63,13 @@ $('document').ready(function(){
   function robot(){
     let robotChar = 'X'
     if(character == 'X') robotChar = 'O';
-
     //smart robot choices
     let robotChoice = '';
 
 
     //if beginning of the match, robot will target either corners or center
     if(robotArr.length == 0){
-      while(['2','4','-4','-2',''].indexOf(robotChoice)!= -1){
+      while(['2','4','6','8',''].indexOf(robotChoice)!= -1){
         robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
       }
       if(playerArr.length == 1 && playerArr[0] !=5) robotChoice = '5';
@@ -79,15 +77,43 @@ $('document').ready(function(){
 
     // second turn
     // offense
-    if(playerArr.length == 1 && robotArr.length == 1){
-      if(['2','4','-4','-2'].indexOf(playerArr[0]) > -1){
-        if(robotArr[0]== 5){
-          while(['2','4','-4','-2','5'].indexOf(robotChoice)!= -1){
-            robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
-          }
-        }
-      }
-    }
+    // else if(playerArr.length == 1 && robotArr.length == 1){
+    //   console.log('second AI Turn')
+    //   // if player's 1st move is any of the sides
+    //   if(['2','4','6','8'].indexOf(playerArr[0]) > -1){
+    //     console.log('player chooses dfeat')
+    //     // if robots first move is center, choose corner
+    //     if(robotArr[0] == 5){
+    //       while(['2','4','6','8','5'].indexOf(robotChoice)!= -1){
+    //         robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
+    //       }
+    //       console.log(robotChoice);
+    //     }
+    //     // if robots first move is corner, choose opposite corner
+    //     else {
+    //       if(robotArr[0] == 1){
+    //         if(playerArr[0] == 2) robotChoice = '7';
+    //         else robotchoice = '3';
+    //         console.log(robotChoice);
+    //       }
+    //       else if (robotArr[0] == 9){
+    //         if(playerArr[0] == 8) robotChoice = '3';
+    //         else robotchoice = '7';
+    //         console.log(robotChoice);
+    //       }
+    //       else if (robotArr[0] == 7){
+    //         if(playerArr[0] == 8) robotChoice = '1';
+    //         else robotchoice = '9';
+    //         console.log(robotChoice);
+    //       }
+    //       else{
+    //         if(playerArr[0] == 2) robotChoice = '9';
+    //         else robotchoice = '1';
+    //         console.log(robotChoice);
+    //       }
+    //     }
+    //   }
+    // }
 
     //if not the beginning of the match
     else{
@@ -101,7 +127,7 @@ $('document').ready(function(){
       //prioritize edges if there are no 2 consecutives
       if(!robotChoice ){
         let limitLoop = 0;
-        while(['2','4','-4','-2',''].indexOf(robotChoice) > -1 || !robotChoice){
+        while(['2','4','6','8',''].indexOf(robotChoice) > -1 || !robotChoice){
           robotChoice = targets[Math.floor(Math.random()*(targets.length-1))];
           if(limitLoop > 1000) break;
           limitLoop++;
@@ -157,6 +183,8 @@ $('document').ready(function(){
         reset();
       }
     }
+    console.log('Player: ' + playerArr);
+    console.log('Ai: ' + robotArr);
   }
   //RESET FUNCTION
   function reset(){
@@ -166,7 +194,7 @@ $('document').ready(function(){
       $('section').children().text('')
       playerArr = [];
       robotArr = [];
-      targets = ['1','2','3','4','5','-4','-3','-2','-1'];
+      targets = ['1','2','3','4','5','6','7','8','9'];
       $('h2').css('display', 'none');
       if(gameCount%2 != 0){
         $('#opponent').hide().fadeIn(300).css('display', 'block');
