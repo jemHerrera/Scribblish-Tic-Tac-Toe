@@ -6,48 +6,71 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name='description' content='A Tic-Tac-Toe game made by Jem Herrera'>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400|Raleway:300,400|Rouge+Script|Cormorant+Garamond:300i" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="scripts/script.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+        <!-- <script src="scripts/script.js"></script> -->
     </head>
     <body>
-        <div class="title">
-            <h4>Let's Play</h4>
-            <h1>T i c - T a c - T o e</h1>
-        </div>
-        <div class='turns'>
-            <h2 id='your'>YOUR TURN!</h2>
-            <h2 id='opponent'>OPPONENT'S TURN!</h2>
-            <h2 id='defeat'>DEFEAT!</h2>
-            <h2 id='draw'>DRAW!</h2>
-        </div>
-        <section>
-            <div id='1'></div>
-            <div id='2'></div>
-            <div id='3'></div>
-            <div id='4'></div>
-            <div id='5'></div>
-            <div id='6'></div>
-            <div id='7'></div>
-            <div id='8'></div>
-            <div id='9'></div>
-        </section>
-        <div class='xo'>
-            <h3>Choose your character!</h2>
-            <div class='char'>X</div>
-            <div class='char'>O</div>
-        </div>
-        <h4 class='spoiler'></h4>
-        <div class='colors'>
-                <div class='zero'></div>
-                <div class='one'></div>
-                <div class='two'></div>
-                <div class='three'></div>
-                <div class='four'></div>
-                <div class='five'></div>
-                <div class='six'></div>
-                <div class='seven'></div>
-                <div class='eight'></div>
+        <div id="app">
+            <div class="title">
+                <h4>Let's Play</h4>
+                <h1>T i c - T a c - T o e</h1>
+            </div>
+            <div class='turns' v-if='gameStart'>
+                <div v-if='!ifEnd'>
+                    <h2 v-if='playerTurn' id='your'>YOUR TURN!</h2>
+                    <h2 v-if='!playerTurn'id='opponent'>OPPONENT'S TURN!</h2>
+                </div>
+                <h2 v-if='player.victory' id='victory'>YOU WIN!</h2>
+                <h2 v-if='ai.victory' id='defeat'>DEFEAT!</h2>
+                <h2 v-if='draw' id='draw'>DRAW!</h2>
+            </div>
+            <section v-if='gameStart'>
+                <div @click='playerInput' id='0'>
+                    <i v-if='spots[0].x' class="fas fa-times"></i>
+                    <i v-if='spots[0].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='1'>
+                    <i v-if='spots[1].x' class="fas fa-times"></i>
+                    <i v-if='spots[1].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='2'>
+                    <i v-if='spots[2].x' class="fas fa-times"></i>
+                    <i v-if='spots[2].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='3'>
+                    <i v-if='spots[3].x' class="fas fa-times"></i>
+                    <i v-if='spots[3].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='4'>
+                    <i v-if='spots[4].x' class="fas fa-times"></i>
+                    <i v-if='spots[4].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='5'>
+                    <i v-if='spots[5].x' class="fas fa-times"></i>
+                    <i v-if='spots[5].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='6'>
+                    <i v-if='spots[6].x' class="fas fa-times"></i>
+                    <i v-if='spots[6].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='7'>
+                    <i v-if='spots[7].x' class="fas fa-times"></i>
+                    <i v-if='spots[7].o' class="far fa-circle"></i>
+                </div>
+                <div  @click='playerInput' id='8'>
+                    <i v-if='spots[8].x' class="fas fa-times"></i>
+                    <i v-if='spots[8].o' class="far fa-circle"></i>
+                </div>
+            </section>
+            <div class='xo' v-if='!gameStart'>
+                <h3>Choose your character!</h2>
+                <button @click='start' class='char'>X</button>
+                <button @click='start'class='char'>O</button>
+            </div>
         </div>
     </body>
+    <script src="scripts/app.js"></script>
 </html>

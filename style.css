@@ -9,7 +9,7 @@
     border: 0;
 }
 
-body{
+#app{
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     align-items: center;
@@ -22,7 +22,6 @@ body{
     background-color: var(--theme-color);
     transition: background-color 1s ease-in-out;
 }
-
 /* HEADINGS */
 
 .title{
@@ -40,25 +39,29 @@ h1{
     
 }
 
-.turns{
+.turns, .turns > div{
     display: flex;
     justify-content: center;
     grid-row-start: 3;
     margin-bottom: 2%;
-    font-size: 0.8rem;
+    font-size: 1.5rem;
     letter-spacing: 0.1rem;
 }
-
+#your, #victory{
+    color: #0084ff;
+}
+#opponent, #defeat{
+    color: #ff004c;
+}
 h2{
     font-weight: 200;
     font-size: 100%;
     position: absolute;
-    display: none;
 }
 
 /* MAIN BODY */
 section{
-    display: none;
+    display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-row-start: 4;
     grid-gap: 2px;
@@ -109,9 +112,26 @@ section div:hover{
     cursor: pointer;
     width: 50%;
 }
+.char{
+    font-size: 300%;
+    height: 100px;
+    width: 100px;
+    font-weight: 300;
+    cursor: pointer;
+}
+.char:active{
+    border: none;
+    outline: none;
+}
 .char{transition: opacity 0.5s ease-in-out;}
-.char:nth-of-type(1){justify-self: end;}
-.char:nth-of-type(2){justify-self: start;}
+.char:nth-of-type(1){
+    justify-self: end;
+    background: none;
+    color: white;
+}
+.char:nth-of-type(2){
+    justify-self: start;
+}
 
 
 .spoiler{
@@ -141,15 +161,9 @@ section div:hover{
     height: 100%;
 }
 
-.zero{background-color: #525252;}
-.one{background-color: #EA6161;}
-.two{background-color: #eaa661;}
-.three{background-color: #eebf52;}
-.four{background-color: #57D257;}
-.five{background-color: #00CDCD;}
-.six{background-color: #61a6ea;}
-.seven{background-color: #a661ea;}
-.eight{background-color: #0e1218;}
+.fa-circle{
+    font-size: 80%;
+}
 
 @media screen and (max-width:600px){
     body{
