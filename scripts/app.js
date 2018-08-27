@@ -77,7 +77,7 @@ new Vue({
                 this.applyInput(playerTarget, this.player);
                 this.victoryCheck(this.player);
                 if (this.player.victory || this.draw) return;
-                this.aiInputRandom();
+                this.aiInput('random');
             }
         },
         // METHOD TO APPLY PLAYER/AI MOVE
@@ -89,19 +89,34 @@ new Vue({
                 who.arr.push(spot);
             }
         },
-        randomize: function(){
-            return Math.floor(Math.random()*9);
+        randomize: function(number){
+            return Math.floor(Math.random()*number);
         },
-        // AI MOVE
-        aiInputRandom: function(){
+        // AI MOVEsets
+        aiInput: function(type){
             this.playerTurn = false;
             let vm = this;
             setTimeout(function(){
-                let randomTarget = Math.floor(Math.random()*9);
-                while (vm.spots[randomTarget].x || vm.spots[randomTarget].o){
-                    randomTarget = vm.randomize();
+                let target = 0;
+
+                // random attack pattern
+                if (type == 'random'){
+                    target = vm.randomize(9);
+                    while (vm.spots[target].x || vm.spots[target].o){
+                        target = vm.randomize(9);
+                    }
                 }
-                vm.applyInput(randomTarget, vm.ai);
+
+                // target edge or center if beginning
+                else if (type == 'beginOffense'){
+                    target = ['0', '2', '4', '6', '8'][vm.randomize(5)];
+                    while (vm.spots[target].x || vm.spots[target].o){
+                        target = ['0', '2', '4', '6', '8'][vm.randomize(5)];
+                    }
+                }
+
+
+                vm.applyInput(target, vm.ai);
                 vm.victoryCheck(vm.ai);
                 vm.playerTurn = true;
             }, 1000);
@@ -133,7 +148,7 @@ new Vue({
             if (this.playerStart){
                 this.playerStart = false;
                 this.playerTurn = false;
-                this.aiInputRandom();
+                this.aiInput('random');
             }
             else{
                 this.playerStart = true;

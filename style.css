@@ -36,7 +36,6 @@ h4{
 
 h1{
     font-weight: 200;
-    
 }
 
 .turns, .turns > div{
@@ -49,9 +48,11 @@ h1{
 }
 #your, #victory{
     color: #0084ff;
+    font-weight: 400 !important;
 }
 #opponent, #defeat{
     color: #ff004c;
+    font-weight: 400 !important;
 }
 h2{
     font-weight: 200;
