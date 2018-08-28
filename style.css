@@ -46,14 +46,21 @@ h1{
     font-size: 1.5rem;
     letter-spacing: 0.1rem;
 }
-#your, #victory{
+#your{
     color: #0084ff;
     font-weight: 400 !important;
 }
-#opponent, #defeat{
+#opponent{
     color: #ff004c;
     font-weight: 400 !important;
 }
+#victory{
+    color:#00f7ff;
+}
+#defeat{
+    color: #ff00b3;
+}
+
 h2{
     font-weight: 200;
     font-size: 100%;
