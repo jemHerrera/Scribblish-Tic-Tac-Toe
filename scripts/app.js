@@ -128,6 +128,14 @@ new Vue({
             ['0','4','8'],
             ['2','4','6']
         ],
+        defense:{
+            firstLine1 : false,
+            firstLine2 : false,
+        },
+        offense:{
+            ver2center: false,
+            ver2corner: false,
+        }
     },
     computed:{
         ifEnd: function(){
@@ -161,6 +169,23 @@ new Vue({
                 else if(!this.playerStart && this.player.arr.length == 2  && ['1', '3', '5', '7'].indexOf(this.player.arr[0]) > -1){
                     this.aiInput('turn5OffenseVer3');
                 }
+                // if ai's first turn if player chooses corner or mid
+                if(!this.playerStart && this.player.arr.length == 1  && ['0', '2', '4', '6', '8'].indexOf(this.player.arr[0]) > -1){
+                    this.aiInput('turn3OffenseVer2');
+                }
+                if(this.offense.ver2center) this.aiInput('centerOffenseVer2');
+                if(this.offense.ver2corner) this.aiInput('cornerOffenseVer2');
+
+                // DEFENSIVE MOVES
+                // if player moves on first turn and did not choose mid, ai chooses mid
+                if(this.playerStart && this.player.arr.length == 1 && this.player.arr[0] != 4) this.aiInput('firstLineDefense1');
+                else if (this.playerStart && this.player.arr.length == 1 && this.player.arr[0] == 4) this.aiInput('firstLineDefense2');
+
+                // second line of defense
+                if(this.defense.firstLine1) this.aiInput('secondLineDefense1');
+                if(this.defense.firstLine2) this.aiInput('secondLineDefense2');
+
+
                 // STOPPER AND FINISHER
                 if (this.player.arr.length >= 2 && this.ai.arr.length >=1 || this.player.arr.length >= 1 && this.ai.arr.length >=2){
                     this.aiInput('nearVictory');
@@ -199,6 +224,7 @@ new Vue({
                     let secondPlayerChoice = vm.player.arr[1];
                     let secondAiChoice = vm.ai.arr[1];
 
+                    //OFFENSE
                     // random attack pattern
                     if (type == 'random'){
                         console.log('random');
@@ -207,12 +233,11 @@ new Vue({
                             target = vm.randomize(9);
                         }
                     }
-
                     // target edge or center if beginning
                     else if (type == 'beginOffense'){
-                        target = ['0', '2', '4', '6', '8'][vm.randomize(5)];
+                        target = [0, 4, 2, 4, 6, 4, 8][vm.randomize(7)];
                         while (vm.spots[target].x || vm.spots[target].o){
-                            target = ['0', '2', '4', '6', '8'][vm.randomize(5)];
+                            target = [0, 4, 2, 4, 6, 4, 8][vm.randomize(7)];
                         }
                     }
 
@@ -245,14 +270,140 @@ new Vue({
                     }
 
                     else if (type == 'turn5OffenseVer3'){
-                        console.log('Player chooses a side on his second turn. Guaranteed win for AI.')
-                        if(firstAiChoice== 4){
-                            target = vm.spots[secondAiChoice].relationships.nearCcwCorner;
-                        }
+                        if(vm.nearVictoryCheck(vm.ai)) target = vm.nearVictoryCheck(vm.ai);
                         else{
-                            target = 4;
-                        }               
+                            console.log('Player chooses a side on his second turn. Guaranteed win for AI.')
+                            if(firstAiChoice == 4){
+                                target = vm.spots[secondAiChoice].relationships.nearCcwCorner;
+                            }
+                            else target = 4;
+                        }            
                     }
+                    // if ai's first turn and player chooses corner or center
+                    else if (type == 'turn3OffenseVer2'){
+                        // if player chooses centre
+                        if(firstPlayerChoice == 4){
+                            console.log('Player chooses center. AI chooses a opposite corner to confuse player');
+                            target = vm.spots[firstAiChoice].relationships.oppositeCorner;
+                        }
+                        // if player chooses corner
+                        else if (['0', '2', '8', '6'].indexOf(firstPlayerChoice) > -1){
+                            // if ai's first choice is center
+                            if(firstAiChoice == 4){
+                                console.log('Player chooses corner. AI chooses a opposite corner to confuse player');
+                                target = vm.spots[firstPlayerChoice].relationships.oppositeCorner;
+                                vm.offense.ver2center = true;
+                            }
+                            
+
+                        }
+                    }
+                    // if player chooses opp corner on second turn
+                    else if (type == 'centerOffenseVer2'){
+                        if(secondPlayerChoice == vm.spots[firstPlayerChoice].relationships.farCcwSide){
+                            target = vm.spots[secondPlayerChoice].relationships.farCcwCorner;
+                            console.log('Player chooses a near side. AI chooses far corner');
+                        }
+                        else if(secondPlayerChoice == vm.spots[firstPlayerChoice].relationships.farCwSide){
+                            target = vm.spots[secondPlayerChoice].relationships.farCwCorner;
+                            console.log('Player chooses a near side. AI chooses far corner');
+                        }
+                        else {
+                            console.log('Player tries to finish on the second turn, AI destroys player.');
+                            vm.offense.ver2center= false;
+                            return;
+                        }
+                        vm.offense.ver2center= false;
+                    }
+
+                    // DEFENSE
+                    // first line
+                    else if (type == 'firstLineDefense1'){
+                        console.log('Player did not choose middle on offense. AI chooses middle.');
+                        target = 4;
+                        vm.defense.firstLine1 = true;
+                    }
+                    else if (type == 'firstLineDefense2'){
+                        console.log('Player chose middle on offense. AI chooses one of the corners.')
+                        target = [0, 2, 6, 8][vm.randomize(4)];
+                        vm.defense.firstLine2 = true;
+                    }
+                    // second line
+                    else if (type == 'secondLineDefense1'){
+                        // if player's first turn is a side
+                        if(['1', '3', '5', '7'].indexOf(vm.player.arr[0]) > -1){
+                            console.log('Player chooses a side on the first turn');
+                            // if player's second turn is far corner(ccw)
+                            if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.farCcwCorner){
+                                console.log('Player choses the far counter-clockwise corner on the second turn, AI blocks the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.cwSide;
+                            }
+                            // if player's second turn is far corner(cw)
+                            else if (vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.farCwCorner){
+                                console.log('Player choses the far clockwise corner on the second turn, AI blocks the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.ccwSide;
+                            }
+                            // if player's second turn is a side(ccw)
+                            else if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.ccwSide){
+                                console.log('Player choses the counter-clockwise side on the second turn, AI blocks the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.farCcwCorner;
+                            }
+                            // if player's second turn is a side(cw)
+                            else if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.cwSide){
+                                console.log('Player choses the clockwise side on the second turn, AI blocks the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.farCwCorner;
+                            }
+                            // if player's second turn is opp side
+                            else if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.oppositeSide){
+                                console.log('Player choses the opposite side on the second turn, AI attacks the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.farCwCorner;
+                            }
+                            else {
+                                console.log('Player tries to finish on the second turn, AI must block.');
+                                vm.defense.firstLine1 = false;
+                                return;
+                            }
+                        }
+                        // if player's first turn is corner
+                        else if (['0', '2', '6', '8'].indexOf(vm.player.arr[0]) > -1){
+                            console.log('Player chooses a corner on the first turn'); 
+                            // if player's second turn is far side(ccw)
+                            if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.farCcwSide){
+                                console.log('Player choses the far counter-clockwise side on the second turn, AI baits the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.farCwSide;
+                            }
+                            // if player's second turn is far side(cw)
+                            else if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.farCwSide){
+                                console.log('Player choses the far clockwise side on the second turn, AI baits the player');
+                                target = vm.spots[vm.player.arr[0]].relationships.farCcwSide;
+                            }
+                            // if player's second turn is opp corner(cw)
+                            else if(vm.player.arr[1] == vm.spots[vm.player.arr[0]].relationships.oppositeCorner){
+                                console.log('Player choses the opposite corner on the second turn, AI chooses a side to block');
+                                target = vm.spots[vm.player.arr[0]].relationships.farCcwSide;
+                            }
+                            else {
+                                console.log('Player tries to finish on the second turn, AI must block.');
+                                vm.defense.firstLine1 = false;
+                                return;
+                            }
+                        }
+                        vm.defense.firstLine1 = false;
+                    }
+                    else if (type == 'secondLineDefense2'){
+                        // if player chooses opp corner of ai
+                        if(vm.player.arr[1] == vm.spots[vm.ai.arr[0]].relationships.oppositeCorner){
+                            console.log('Player choses the opposite corner on the second turn, AI chooses an edge to block');
+                            target = vm.spots[vm.ai.arr[0]].relationships.cwCorner;
+                        }
+                        else {
+                            console.log('Player tries to finish on the second turn, AI must block.');
+                            vm.defense.firstLine1 = false;
+                            return;
+                        }
+                        vm.defense.firstLine2 = false;
+                    }
+
 
                     // if at 4th turn and above, check if someone is close to winning
                     else if (type == 'nearVictory'){
@@ -339,6 +490,8 @@ new Vue({
                 spot.x = false;
                 spot.o = false;
             }
+            this.defense.firstLine1 = false;
+            this.defense.firstLine2 = false;
         }
     }
 });
