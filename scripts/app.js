@@ -155,7 +155,7 @@ new Vue({
         playerInput: function(event){
             if(this.playerTurn && !this.ai.victory && !this.draw){
                 let playerTarget = event.target.id;
-                this.applyInput(playerTarget, this.player);
+                if(!this.applyInput(playerTarget, this.player)) return;
                 this.victoryCheck(this.player);
                 if (this.player.victory || this.draw) return;
 
@@ -197,7 +197,8 @@ new Vue({
         // METHOD TO APPLY PLAYER/AI MOVE
         applyInput: function(spot, who){
              // if the spot is unoccupied, occupy the spot
-            if (!this.spots[spot].x && !this.spots[spot].o){
+            if(!spot) return false;
+            else if (!this.spots[spot].x && !this.spots[spot].o){
                 if (who == this.player) {
                     this.aiDone = false;
                     this.playerTurn = false;
@@ -205,9 +206,10 @@ new Vue({
                 if (who.character == 'X') this.spots[spot].x = true;
                 else this.spots[spot].o = true;
                 who.arr.push(spot);
+                return true;
             }
             else {
-                return;
+                return false;
             }
         },
         randomize: function(number){
