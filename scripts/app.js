@@ -290,12 +290,21 @@ new Vue({
                         else if (['0', '2', '8', '6'].indexOf(firstPlayerChoice) > -1){
                             // if ai's first choice is center
                             if(firstAiChoice == 4){
-                                console.log('Player chooses corner. AI chooses a opposite corner to confuse player');
+                                console.log('Player chooses center. AI chooses a opposite corner to confuse player');
                                 target = vm.spots[firstPlayerChoice].relationships.oppositeCorner;
                                 vm.offense.ver2center = true;
                             }
-                            
-
+                            else if(firstAiChoice != 4){
+                                if(firstPlayerChoice == vm.spots[firstAiChoice].relationships.oppositeCorner) {
+                                    console.log('Player chooses opposite corner. AI chooses center to confuse player');
+                                    target = 4;
+                                    vm.offense.ver2center = true;
+                                }
+                                else if(firstPlayerChoice == vm.spots[firstAiChoice].relationships.cwCorner || firstPlayerChoice == vm.spots[firstAiChoice].relationships.ccwCorner ) {
+                                    console.log('Player chooses a side corner. AI chooses opposite corner');
+                                    target = vm.spots[firstAiChoice].relationships.oppositeCorner;
+                                }
+                            }
                         }
                     }
                     // if player chooses opp corner on second turn
