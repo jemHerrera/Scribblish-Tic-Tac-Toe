@@ -336,7 +336,7 @@ new Vue({
                     }
                     else if (type == 'firstLineDefense2'){
                         console.log('Player chose middle on offense. AI chooses one of the corners.')
-                        target = [0, 2, 6, 8][vm.randomize(4)];
+                        target = [2, 6, 8][vm.randomize(3)];
                         vm.defense.firstLine2 = true;
                     }
                     // second line
